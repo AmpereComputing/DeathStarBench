@@ -12,7 +12,7 @@ worker_processes  auto;
 # is greater than the total connections between the client and Nginx. 
 events {
   use epoll;
-  worker_connections  1024;
+  worker_connections  5000;
 }
 
 env fqdn_suffix;
@@ -42,7 +42,7 @@ http {
   # the duration of your experiment and keepalive_requests
   # is greateer than the total number of requests sent from
   # the workload generator
-  keepalive_timeout  120s;
+  keepalive_timeout  300s;
   keepalive_requests 100000;
 
   # Docker default hostname resolver. Set valid timeout to prevent unlimited
@@ -52,7 +52,7 @@ http {
 
   lua_package_path '/usr/local/openresty/nginx/lua-scripts/?.lua;/usr/local/openresty/luajit/share/lua/5.1/?.lua;;';
 
-  lua_shared_dict config 32k;
+  lua_shared_dict config 200k;
 
   init_by_lua_block {
     local bridge_tracer = require "opentracing_bridge_tracer"
@@ -91,8 +91,8 @@ http {
     lua_need_request_body on;
 
     # Used when SSL enabled
-    lua_ssl_trusted_certificate /keys/CA.pem;
-    lua_ssl_ciphers ALL:!ADH:!LOW:!EXP:!MD5:@STRENGTH;
+    #lua_ssl_trusted_certificate /keys/CA.pem;
+    #lua_ssl_ciphers ALL:!ADH:!LOW:!EXP:!MD5:@STRENGTH;
 
     # Checklist: Make sure that the location here is consistent
     # with the location you specified in wrk2.

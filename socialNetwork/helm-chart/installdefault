@@ -1,0 +1,3 @@
+#!/bin/bash
+
+helm install social-network ./socialnetwork/  --set global.mongodb.sharding.enabled=true,global.mongodb.standalone.enabled=false,global.redis.cluster.enabled=true,global.redis.standalone.enabled=false,global.memcached.cluster.enabled=true,global.memcached.standalone.enabled=false --timeout 10m0s &

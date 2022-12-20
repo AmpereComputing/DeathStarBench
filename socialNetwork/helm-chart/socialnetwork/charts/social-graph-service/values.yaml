@@ -6,7 +6,7 @@ ports:
 
 container:
   command: SocialGraphService
-  image: deathstarbench/social-network-microservices
+  image: anuphal/social-network-microservices
   name: social-graph-service
   ports: 
   - containerPort: 9090
